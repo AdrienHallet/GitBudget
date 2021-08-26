@@ -1,0 +1,29 @@
+<div class="grid">
+  <div class="col-12">
+    <form [formGroup]="categoryForm">
+  <span class="p-float-label">
+    <input id="categoryNameInput" type="text" pInputText [formControlName]="categoryNameControl"/>
+    <label for="categoryNameInput">Category Name</label>
+  </span>
+    </form>
+  </div>
+
+  <div class="col-12 ">
+    <button
+      *ngIf="isCreating"
+      pButton
+      type="button"
+      icon="pi pi-plus"
+      label="Create"
+      [disabled]="!categoryForm.valid"
+      (click)="onCreateClick()"></button>
+    <button
+      *ngIf="!isCreating"
+      [disabled]="!categoryForm.valid || categoryForm.pristine"
+      (click)="onUpdateClick()"
+      pButton
+      type="button"
+      icon="pi pi-check"
+      label="Update"></button>
+  </div>
+</div>

@@ -1,0 +1,37 @@
+<p-menubar [model]="mainMenuItems">
+  <ng-template pTemplate="start">
+    My Application
+  </ng-template>
+  <ng-template pTemplate="end">
+    <div *ngIf="user$ | async as user; else loginBlock">
+
+      <button pButton
+              type="button"
+              label="Insert"
+              icon="pi pi-github"
+              class="pr-4"
+              [loading]="false" (click)="insertTestData()"></button>
+      <button pButton
+              type="button"
+              label="Export"
+              icon="pi pi-github"
+              class="pr-4"
+              [loading]="false" (click)="export()"></button>
+      <p-avatar [label]="user.login.charAt(0)"
+                size="large"
+                class="user-icon"
+                (click)="menu.toggle($event)">
+      </p-avatar>
+      <p-tieredMenu #menu [model]="buttonMenuItems" [popup]="true"></p-tieredMenu>
+    </div>
+    <ng-template #loginBlock>
+      <button pButton
+              type="button"
+              label="Log-in with Github"
+              icon="pi pi-github"
+              [loading]="false" (click)="githubLogin()">
+      </button>
+    </ng-template>
+  </ng-template>
+</p-menubar>
+

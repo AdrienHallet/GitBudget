@@ -1,0 +1,12 @@
+<div class="grid">
+  <div class="col-4">
+    <p-fieldset legend="Categories">
+      <app-category-table (onCategorySelect)="onCategorySelect($event)"></app-category-table>
+    </p-fieldset>
+  </div>
+  <div class="col-8">
+    <p-fieldset legend="Details">
+      <app-category-detail [category]="activeCategory"></app-category-detail>
+    </p-fieldset>
+  </div>
+</div>

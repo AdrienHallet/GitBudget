@@ -1,0 +1,31 @@
+<p-fieldset legend="content">
+  count: {{ transactionCount | async }}
+  <p-scrollPanel [style]="{ height: 'calc(100vh - 250px)' }">
+      <table>
+        <tr>
+          <th>ID</th>
+          <th>Name</th>
+          <th>Date</th>
+          <th>Category</th>
+          <th>Value</th>
+        </tr>
+        <tr *ngFor="let transaction of (transactions$ | async); trackBy: trackByFn">
+          <td>{{ transaction.id }}</td>
+          <td>
+            <app-transaction-name [transaction]="transaction"></app-transaction-name>
+          </td>
+          <td>
+            <app-transaction-date [transaction]="transaction"></app-transaction-date>
+          </td>
+          <td>
+            <app-transaction-category [transaction]="transaction"></app-transaction-category>
+          </td>
+          <td>
+            <app-transaction-amount [transaction]="transaction"></app-transaction-amount>
+          </td>
+        </tr>
+      </table>
+  </p-scrollPanel>
+</p-fieldset>
+
+

@@ -1,0 +1,43 @@
+@import 'themes';
+@import 'common-behaviour';
+
+body {
+  @include theme-aware('background', 'background');
+  @include theme-aware('color', 'text-color');
+  font-family: 'Roboto', sans-serif;
+  margin: 10px 10px 10px 10px;
+}
+
+.header {
+  @include theme-aware('background', 'background-dark');
+}
+
+.p-avatar-lg {
+  @include theme-aware('background', 'accent');
+  @include theme-aware('color', 'accent-text');
+  cursor: pointer;
+}
+
+.main {
+  display: flex;
+}
+
+.content {
+  flex-direction: column;
+  flex: 1;
+  width: 100%;
+}
+
+.navbar {
+  @include theme-aware('background', 'background-dark');
+  flex: 0 0 20%;
+  flex-direction: column;
+  display: flex;
+  justify-content: flex-start;
+
+  .item {
+    background: pink;
+    width: 100%;
+    flex-direction: column;
+  }
+}
