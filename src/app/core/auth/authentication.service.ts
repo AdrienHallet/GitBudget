@@ -4,6 +4,7 @@ import {map, mergeMap, tap} from 'rxjs/operators';
 import { AuthenticationState } from './authentication.state';
 import { GithubService } from './github/logic/github.service';
 import {DatabaseService} from '../data/db/database.service';
+import {User} from '../../shared/models/user.model';
 
 
 /**
@@ -27,7 +28,7 @@ export class AuthenticationService {
     return this.githubService.login(code).pipe(
       tap(user => this.authenticationState.setUser(user)),
     ).pipe(
-      mergeMap(() => this.databaseService.retrieveDatabase().pipe(tap((resp) => console.log('answer'))))
+      mergeMap(() => this.databaseService.smartRetrieve())
     );
   }
 
@@ -41,14 +42,14 @@ export class AuthenticationService {
   /**
    * Observes the current user.
    */
-  getUser() {
+  getUser(): Observable<User> {
     return this.authenticationState.user$;
   }
 
   /**
    * Observes the authentication state.
    */
-  isAuthenticated() {
+  isAuthenticated(): Observable<boolean> {
     return this.authenticationState.user$.pipe(
       map(user => user != null),
     );

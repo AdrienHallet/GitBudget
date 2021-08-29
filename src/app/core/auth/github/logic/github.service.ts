@@ -1,7 +1,6 @@
-import {HttpClient} from '@angular/common/http';
 import {Injectable} from '@angular/core';
 import {BehaviorSubject, iif, Observable} from 'rxjs';
-import {catchError, filter, map, mergeMap, shareReplay, switchMap, take, tap} from 'rxjs/operators';
+import {catchError, map, mergeMap, switchMap, take, tap} from 'rxjs/operators';
 import {IllegalStateError} from 'src/app/core/error/type/illegal-state.error';
 import {User} from 'src/app/shared/models/user.model';
 import {AuthenticationState} from '../../authentication.state';
@@ -18,8 +17,14 @@ export class GithubService {
     private githubApi: GithubApi,
     private githubState: GithubState,
     private authenticationState: AuthenticationState,
-    private httpClient: HttpClient,
   ) {
+  }
+
+  /**
+   * Retrieves the token locally.
+   */
+  private static retrieveLocalToken(): string {
+    return localStorage.getItem('token') || '';
   }
 
   /**
@@ -47,16 +52,27 @@ export class GithubService {
     );
   }
 
-  public retrieveData(): Observable<Blob> {
+  public fetchSHA(): Observable<string> {
+    return this.authenticationState.user$.pipe(
+      mergeMap((user, _) => {
+        return this.githubApi.getFileInfo(user.login, 'budget-dev', 'data.sqlite');
+      }),
+      map((content: GithubContent) => {
+        return content.sha;
+      })
+    );
+  }
+
+  public retrieveData(): Observable<GithubContent> {
     let exposedUser: User;
     return this.authenticationState.user$.pipe(
-      mergeMap((user, index) => {
+      mergeMap((user, _) => {
         exposedUser = user;
         return this.githubApi.getRepository(user.login, 'budget-dev').pipe(
           catchError(() => this.createRepository()),
         );
       }),
-      mergeMap((user, index) => {
+      mergeMap(() => {
         return this.githubApi.getFileInfo(exposedUser.login, 'budget-dev', 'data.sqlite').pipe(
           catchError(() => this.createDatabase(exposedUser))
         );
@@ -65,10 +81,7 @@ export class GithubService {
           iif(() => data === null,
             this.createDatabase(exposedUser) ,
             this.githubApi.getBlob(data.git_url)),
-      ),
-      map((data) => {
-        return new Blob([atob(data.content)], {type: 'application/json'});
-      })
+      )
     );
   }
 
@@ -98,7 +111,7 @@ export class GithubService {
    * @param code the temporary authentication code
    */
   public retrieveToken(code?: any): Observable<string> {
-    const localToken = this.retrieveLocalToken();
+    const localToken = GithubService.retrieveLocalToken();
     if (localToken) {
       this.storeToken(localToken);
       return new BehaviorSubject<string>(localToken).asObservable();
@@ -112,12 +125,12 @@ export class GithubService {
           tap(
             (token) => this.storeToken(token),
             () => this.githubState.hasToken = false)
-        )
+        );
       }
     }
   }
 
-  private storeToken(token: any) {
+  private storeToken(token: any): void {
     if (token) {
       localStorage.setItem('token', token);
       this.githubState.setToken(token);
@@ -125,13 +138,5 @@ export class GithubService {
       localStorage.removeItem('token');
       this.githubState.setToken('');
     }
-
-  }
-
-  /**
-   * Retrieves the token locally.
-   */
-  private retrieveLocalToken() {
-    return localStorage.getItem('token');
   }
 }
