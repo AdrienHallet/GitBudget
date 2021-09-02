@@ -1,30 +1,22 @@
 import {NgModule} from '@angular/core';
-import {TransactionAmountComponent} from './field/amount/transaction-amount.component';
-import {TransactionListComponent} from './list/transaction-list.component';
 import {SharedModule} from '../../shared/shared.module';
-import {TransactionNameComponent} from './field/name/transaction-name.component';
-import {TransactionCategoryComponent} from './field/category/transaction-category.component';
 import {FormsModule} from '@angular/forms';
-import {TransactionDateComponent} from './field/date/transaction-date.component';
 import {TransactionTableComponent} from './table/transaction-table.component';
-
+import {TransactionDashboardComponent} from './transaction-dashboard.component';
+import {TransactionFormComponent} from './form/transaction-form.component';
 
 @NgModule({
   declarations: [
-    TransactionAmountComponent,
-    TransactionNameComponent,
-    TransactionCategoryComponent,
-    TransactionDateComponent,
-    TransactionListComponent,
+    TransactionDashboardComponent,
+    TransactionFormComponent,
     TransactionTableComponent,
   ],
-    imports: [
-        SharedModule,
-        FormsModule,
-    ],
+  imports: [
+      SharedModule,
+      FormsModule,
+  ],
   exports: [
-    TransactionListComponent,
-    TransactionTableComponent,
+    TransactionDashboardComponent
   ],
 })
 export class TransactionModule {

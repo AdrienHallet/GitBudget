@@ -1,0 +1,12 @@
+<div class="flex flex-column md:flex-row">
+  <span class="">
+    <p-fieldset legend="Transactions" [style]="{height: '85vh'}">
+      <app-transaction-table></app-transaction-table>
+    </p-fieldset>
+  </span>
+  <span class="" style="min-width: 50vw">
+    <p-fieldset legend="Details">
+      <app-transaction-form [form]="transactionForm"></app-transaction-form>
+    </p-fieldset>
+  </span>
+</div>

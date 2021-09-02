@@ -16,8 +16,10 @@ import {FieldsetModule} from 'primeng/fieldset';
 import {ScrollPanelModule} from 'primeng/scrollpanel';
 import {TableModule} from 'primeng/table';
 import {OverlayPanelModule} from 'primeng/overlaypanel';
-import {TieredMenu, TieredMenuModule} from 'primeng/tieredmenu';
+import {TieredMenuModule} from 'primeng/tieredmenu';
 import {AvatarModule} from 'primeng/avatar';
+import {DialogModule} from 'primeng/dialog';
+import {SidebarModule} from 'primeng/sidebar';
 
 @NgModule({
   declarations: [
@@ -34,6 +36,7 @@ import {AvatarModule} from 'primeng/avatar';
     // Prime NG
     AvatarModule,
     CalendarModule,
+    DialogModule,
     DropdownModule,
     FieldsetModule,
     InputTextModule,
@@ -41,6 +44,7 @@ import {AvatarModule} from 'primeng/avatar';
     MenubarModule,
     OverlayPanelModule,
     ScrollPanelModule,
+    SidebarModule,
     TableModule,
     TieredMenuModule,
   ],
@@ -56,6 +60,7 @@ import {AvatarModule} from 'primeng/avatar';
     // Prime NG
     AvatarModule,
     CalendarModule,
+    DialogModule,
     DropdownModule,
     FieldsetModule,
     InputTextModule,
@@ -63,6 +68,7 @@ import {AvatarModule} from 'primeng/avatar';
     MenubarModule,
     OverlayPanelModule,
     ScrollPanelModule,
+    SidebarModule,
     TableModule,
     TieredMenuModule,
   ]

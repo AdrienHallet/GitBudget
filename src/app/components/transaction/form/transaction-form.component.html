@@ -1,0 +1,80 @@
+<ng-container *ngIf="!form; else formBlock">
+  no form
+</ng-container>
+
+<ng-template #formBlock >
+  <div class="grid">
+    <ng-container [formGroup]="form">
+    <span class="col-12">
+      <span class="p-float-label">
+        <input
+          [formControlName]="TRANSACTION_NAME"
+          type="text"
+          pInputText
+          class="w-12">
+        <label>Description</label>
+      </span>
+    </span>
+
+      <span class="col">
+      <span class="p-float-label">
+        <p-inputNumber
+          [formControlName]="TRANSACTION_VALUE"
+          mode="currency"
+          currency="EUR"
+          styleClass="w-6"></p-inputNumber>
+        <label>Amount</label>
+      </span>
+    </span>
+
+      <span class="col-12">
+      <ng-container *ngIf="categoryOptions$ | async as categories">
+        <span class="p-float-label">
+          <p-dropdown
+            [formControlName]="TRANSACTION_CATEGORY_ID"
+            [options]="categories"
+            [optionLabel]="CATEGORY_NAME"
+            [optionValue]="CATEGORY_ID"
+            [showClear]="true"
+            placeholder=""
+            [autoDisplayFirst]="false"
+            styleClass="w-6"
+          ></p-dropdown>
+            <label>Category</label>
+        </span>
+      </ng-container>
+    </span>
+
+      <span class="col-12">
+      <span class="p-float-label">
+        <p-calendar
+          styleClass="w-6"
+          [formControlName]="TRANSACTION_DATE"
+        ></p-calendar>
+        <label>Date</label>
+      </span>
+    </span>
+    </ng-container>
+
+    <span class="col-6 flex flex-wrap relative">
+    <span class="">
+      <button
+        (click)="onCancel()"
+        pButton
+        type="button"
+        label="Cancel"></button>
+    </span>
+    <span class="absolute right-0">
+      <button
+        (click)="onCreate()"
+        pButton
+        type="button"
+        label="Create"></button>
+      <button
+        pButton
+        type="button"
+        label="Create & New" class="ml-2"></button>
+    </span>
+  </span>
+  </div>
+</ng-template>

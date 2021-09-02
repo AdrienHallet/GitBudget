@@ -1,35 +1,39 @@
-  <div class="card">
-    <h5>Pagination test</h5>
-    <p-table [value]="(transactions$ | async) || []"
-             [lazy]="true"
-             [totalRecords]="(transactionCount | async) || 0"
-             (onLazyLoad)="onPageRequest($event)"
-             [paginator]="true"
-             [rows]="10"
-             [showCurrentPageReport]="true"
-             currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries"
-             [rowsPerPageOptions]="[10,25,50]">
-      <ng-template pTemplate="header">
-        <tr>
-          <th>Name</th>
-          <th>Country</th>
-          <th>Company</th>
-          <th>Representative</th>
-        </tr>
-      </ng-template>
-      <ng-template pTemplate="body" let-transaction>
-        <tr>
-          <td>{{transaction.id}}</td>
-          <td>{{transaction.name}}</td>
-          <td>{{transaction.value}}</td>
-          <td>todo</td>
-        </tr>
-      </ng-template>
-      <ng-template pTemplate="paginatorleft">
-        <p-button type="button" icon="pi pi-plus" styleClass="p-button-text"></p-button>
-      </ng-template>
-      <ng-template pTemplate="paginatorright">
-        <p-button type="button" icon="pi pi-cloud" styleClass="p-button-text"></p-button>
-      </ng-template>
-    </p-table>
-  </div>
+<p-table [value]="(transactions$ | async) || []"
+         [lazy]="true"
+         [totalRecords]="(transactionCount | async) || 0"
+         (onLazyLoad)="onPageRequest($event)"
+         [paginator]="true"
+         [rows]="10"
+         [showCurrentPageReport]="true"
+         currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries"
+         [rowsPerPageOptions]="[10,25,50]">
+  <ng-template pTemplate="header">
+    <tr>
+      <th>ID</th>
+      <th>Date</th>
+      <th>Description</th>
+      <th>Amount</th>
+      <th>Category</th>
+    </tr>
+  </ng-template>
+  <ng-template pTemplate="body" let-transaction>
+    <tr>
+      <td>{{transaction[TRANSACTION_ID]}}</td>
+      <td>{{transaction[TRANSACTION_DATE]}}</td>
+      <td>{{transaction[TRANSACTION_NAME]}}</td>
+      <td>{{transaction[TRANSACTION_VALUE]}}</td>
+      <td>todo</td>
+    </tr>
+  </ng-template>
+  <ng-template pTemplate="paginatorright">
+    <p-button
+      (click)="toggleForm(true)"
+      type="button"
+      icon="pi pi-plus"
+      styleClass="p-button-text"></p-button>
+  </ng-template>
+</p-table>
+
+<p-dialog header="New Transaction" [(visible)]="isFormVisible" [style]="{width: '50vw'}">
+  <app-transaction-form></app-transaction-form>
+</p-dialog>
