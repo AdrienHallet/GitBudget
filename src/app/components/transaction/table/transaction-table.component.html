@@ -9,25 +9,24 @@
          [rowsPerPageOptions]="[10,25,50]">
   <ng-template pTemplate="header">
     <tr>
-      <th>ID</th>
-      <th>Date</th>
-      <th>Description</th>
-      <th>Amount</th>
+      <th class="w-1">ID</th>
+      <th class="w-2">Date</th>
+      <th class="w-2">Amount</th>
+      <th class="w-5">Description</th>
       <th>Category</th>
     </tr>
   </ng-template>
   <ng-template pTemplate="body" let-transaction>
     <tr>
       <td>{{transaction[TRANSACTION_ID]}}</td>
-      <td>{{transaction[TRANSACTION_DATE]}}</td>
+      <td>{{transaction[TRANSACTION_DATE] | date:'dd/MM/yyyy' }}</td>
+      <td>€ {{transaction[TRANSACTION_VALUE] || '?'}}</td>
       <td>{{transaction[TRANSACTION_NAME]}}</td>
-      <td>{{transaction[TRANSACTION_VALUE]}}</td>
-      <td>todo</td>
+      <td>{{transaction[TRANSACTION_CATEGORY_ID] | category | async }}</td>
     </tr>
   </ng-template>
   <ng-template pTemplate="paginatorright">
     <p-button
-      (click)="toggleForm(true)"
       type="button"
       icon="pi pi-plus"
       styleClass="p-button-text"></p-button>

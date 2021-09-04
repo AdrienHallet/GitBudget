@@ -66,6 +66,7 @@
     </span>
     <span class="absolute right-0">
       <button
+        [disabled]="!form.valid"
         (click)="onCreate()"
         pButton
         type="button"

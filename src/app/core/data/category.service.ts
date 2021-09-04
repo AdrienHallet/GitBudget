@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
-import {catchError, map, mergeMap, switchMap} from 'rxjs/operators';
-import {from, Observable, of} from 'rxjs';
+import {map} from 'rxjs/operators';
+import {from, Observable} from 'rxjs';
 import {DataService} from './data.service';
 import {AppTable} from './db/table.enum';
 import {Category} from '../models/category.model';
@@ -16,7 +16,6 @@ export class CategoryService {
   constructor(
     private dataService: DataService,
   ) {}
-
 
   public update(category: Category): Observable<Category> {
     return from(this.dataService.update(this.TABLE, category.id, category)).pipe(

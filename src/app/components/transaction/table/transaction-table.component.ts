@@ -1,5 +1,12 @@
 import {Component, OnInit} from '@angular/core';
-import {Transaction, TRANSACTION_DATE, TRANSACTION_ID, TRANSACTION_NAME, TRANSACTION_VALUE} from '../../../core/models/transaction.model';
+import {
+  Transaction,
+  TRANSACTION_CATEGORY_ID,
+  TRANSACTION_DATE,
+  TRANSACTION_ID,
+  TRANSACTION_NAME,
+  TRANSACTION_VALUE
+} from '../../../core/models/transaction.model';
 import {TransactionService} from '../../../core/data/transaction.service';
 import {Observable} from 'rxjs';
 import {tap} from 'rxjs/operators';
@@ -18,6 +25,7 @@ export class TransactionTableComponent implements OnInit {
   readonly TRANSACTION_VALUE = TRANSACTION_VALUE;
   readonly TRANSACTION_NAME = TRANSACTION_NAME;
   readonly TRANSACTION_DATE = TRANSACTION_DATE;
+  readonly TRANSACTION_CATEGORY_ID = TRANSACTION_CATEGORY_ID;
 
   constructor(
     private transactionService: TransactionService,
