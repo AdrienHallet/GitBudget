@@ -2,6 +2,8 @@
          [lazy]="true"
          [totalRecords]="(transactionCount | async) || 0"
          (onLazyLoad)="onPageRequest($event)"
+         (onRowSelect)="onRowSelect($event)" (onRowUnselect)="onRowUnselect()"
+         selectionMode="single"
          [paginator]="true"
          [rows]="10"
          [showCurrentPageReport]="true"
@@ -17,7 +19,7 @@
     </tr>
   </ng-template>
   <ng-template pTemplate="body" let-transaction>
-    <tr>
+    <tr [pSelectableRow]="transaction">
       <td>{{transaction[TRANSACTION_ID]}}</td>
       <td>{{transaction[TRANSACTION_DATE] | date:'dd/MM/yyyy' }}</td>
       <td>€ {{transaction[TRANSACTION_VALUE] || '?'}}</td>

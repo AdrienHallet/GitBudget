@@ -18,9 +18,7 @@ import {
 export class TransactionFormComponent implements OnInit {
 
   categoryOptions$: Observable<Category[]>;
-
-  @Input()
-  form: FormGroup;
+  transactionForm: FormGroup;
 
   readonly CATEGORY_ID = CATEGORY_ID;
   readonly CATEGORY_NAME = CATEGORY_NAME;
@@ -33,6 +31,11 @@ export class TransactionFormComponent implements OnInit {
     private categoryService: CategoryService,
     private transactionService: TransactionService,
   ) {
+  }
+
+  @Input()
+  set form(transactionForm: FormGroup) {
+    this.transactionForm = transactionForm;
   }
 
   ngOnInit(): void {

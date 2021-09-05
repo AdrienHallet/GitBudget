@@ -1,10 +1,10 @@
-<ng-container *ngIf="!form; else formBlock">
+<ng-container *ngIf="!transactionForm; else formBlock">
   no form
 </ng-container>
 
 <ng-template #formBlock >
   <div class="grid">
-    <ng-container [formGroup]="form">
+    <ng-container [formGroup]="transactionForm">
     <span class="col-12">
       <span class="p-float-label">
         <input
@@ -66,7 +66,7 @@
     </span>
     <span class="absolute right-0">
       <button
-        [disabled]="!form.valid"
+        [disabled]="!transactionForm.valid"
         (click)="onCreate()"
         pButton
         type="button"

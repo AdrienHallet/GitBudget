@@ -1,7 +1,9 @@
 <div class="flex flex-column md:flex-row">
   <span class="">
     <p-fieldset legend="Transactions" [style]="{height: '85vh'}">
-      <app-transaction-table></app-transaction-table>
+      <app-transaction-table
+        (unselectTransaction)="onUnselectTransaction()"
+        (selectTransaction)="onSelectTransaction($event)"></app-transaction-table>
     </p-fieldset>
   </span>
   <span class="" style="min-width: 50vw">

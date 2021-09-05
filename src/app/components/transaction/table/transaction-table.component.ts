@@ -1,4 +1,4 @@
-import {Component, OnInit} from '@angular/core';
+import {Component, EventEmitter, OnInit, Output} from '@angular/core';
 import {
   Transaction,
   TRANSACTION_CATEGORY_ID,
@@ -20,6 +20,11 @@ export class TransactionTableComponent implements OnInit {
   transactions$: Observable<Transaction[]>;
   transactionCount: Observable<number>;
   isFormVisible = false;
+
+  @Output()
+  unselectTransaction: EventEmitter<void> = new EventEmitter<void>();
+  @Output()
+  selectTransaction: EventEmitter<Transaction> = new EventEmitter<Transaction>();
 
   readonly TRANSACTION_ID = TRANSACTION_ID;
   readonly TRANSACTION_VALUE = TRANSACTION_VALUE;
@@ -46,5 +51,13 @@ export class TransactionTableComponent implements OnInit {
     const pageSize = $event.rows;
     const first = $event.first;
     this.loadTransactions(pageSize, first / pageSize);
+  }
+
+  onRowSelect($event: any): void {
+    this.selectTransaction.next($event.data as Transaction);
+  }
+
+  onRowUnselect(): void {
+    this.unselectTransaction.next();
   }
 }
