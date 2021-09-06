@@ -12,11 +12,13 @@ import { TokenInterceptor } from './core/token-http.interceptor';
 import {TransactionModule} from './components/transaction/transaction.module';
 import {SharedModule} from './shared/shared.module';
 import {CategoryModule} from './components/category/category.module';
+import {FooterComponent} from './components/footer/footer.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     HeaderComponent,
+    FooterComponent,
   ],
   imports: [
     AppRoutingModule,

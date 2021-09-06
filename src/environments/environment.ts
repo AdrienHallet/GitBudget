@@ -2,10 +2,13 @@
 // `ng build --prod` replaces `environment.ts` with `environment.prod.ts`.
 // The table of file replacements can be found in `angular.json`.
 
+import {commonVariables} from './environment.common';
+
 export const environment = {
   production: false,
   oauthURI: 'http://localhost:3000/auth-callback',
   oauthClientId: '2ff4005a4a71bedf0c50',
+  common: commonVariables,
 };
 
 /*

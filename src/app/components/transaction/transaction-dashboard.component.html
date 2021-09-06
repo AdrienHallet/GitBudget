@@ -1,14 +1,10 @@
 <div class="flex flex-column md:flex-row">
-  <span class="">
-    <p-fieldset legend="Transactions" [style]="{height: '85vh'}">
-      <app-transaction-table
-        (unselectTransaction)="onUnselectTransaction()"
-        (selectTransaction)="onSelectTransaction($event)"></app-transaction-table>
-    </p-fieldset>
-  </span>
-  <span class="" style="min-width: 50vw">
-    <p-fieldset legend="Details">
-      <app-transaction-form [form]="transactionForm"></app-transaction-form>
-    </p-fieldset>
-  </span>
+  <p-card header="Transactions" class="my-2 mr-1" [style]="{height: '80vh'}">
+    <app-transaction-table
+      (unselectTransaction)="onUnselectTransaction()"
+      (selectTransaction)="onSelectTransaction($event)"></app-transaction-table>
+  </p-card>
+  <p-card header="Details" class="my-2 ml-1" [style]="{'min-width': '100vh'}">
+    <app-transaction-form [form]="transactionForm"></app-transaction-form>
+  </p-card>
 </div>

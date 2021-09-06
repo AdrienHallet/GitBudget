@@ -20,6 +20,8 @@ import {TieredMenuModule} from 'primeng/tieredmenu';
 import {AvatarModule} from 'primeng/avatar';
 import {DialogModule} from 'primeng/dialog';
 import {SidebarModule} from 'primeng/sidebar';
+import {PanelModule} from 'primeng/panel';
+import {CardModule} from 'primeng/card';
 
 @NgModule({
   declarations: [
@@ -36,6 +38,7 @@ import {SidebarModule} from 'primeng/sidebar';
     // Prime NG
     AvatarModule,
     CalendarModule,
+    CardModule,
     DialogModule,
     DropdownModule,
     FieldsetModule,
@@ -43,6 +46,7 @@ import {SidebarModule} from 'primeng/sidebar';
     InputNumberModule,
     MenubarModule,
     OverlayPanelModule,
+    PanelModule,
     ScrollPanelModule,
     SidebarModule,
     TableModule,
@@ -60,6 +64,7 @@ import {SidebarModule} from 'primeng/sidebar';
     // Prime NG
     AvatarModule,
     CalendarModule,
+    CardModule,
     DialogModule,
     DropdownModule,
     FieldsetModule,
@@ -67,6 +72,7 @@ import {SidebarModule} from 'primeng/sidebar';
     InputNumberModule,
     MenubarModule,
     OverlayPanelModule,
+    PanelModule,
     ScrollPanelModule,
     SidebarModule,
     TableModule,

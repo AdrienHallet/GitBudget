@@ -1,12 +1,8 @@
 <div class="grid">
-  <div class="col-4">
-    <p-fieldset legend="Categories">
-      <app-category-table (onCategorySelect)="onCategorySelect($event)"></app-category-table>
-    </p-fieldset>
-  </div>
-  <div class="col-8">
-    <p-fieldset legend="Details">
-      <app-category-detail [category]="activeCategory"></app-category-detail>
-    </p-fieldset>
-  </div>
+  <p-card header="Categories" class="col-12 md:col-4 my-2 pr-1">
+    <app-category-table (onCategorySelect)="onCategorySelect($event)"></app-category-table>
+  </p-card>
+  <p-card header="Details" class="col-12 md:col-8 my-2 pl-1">
+    <app-category-detail [category]="activeCategory"></app-category-detail>
+  </p-card>
 </div>

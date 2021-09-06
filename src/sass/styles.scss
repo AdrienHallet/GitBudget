@@ -2,7 +2,7 @@
 @import 'common-behaviour';
 
 body {
-  @include theme-aware('background', 'background');
+  @include theme-aware('background', 'background-dark');
   @include theme-aware('color', 'text-color');
   font-family: 'Roboto', sans-serif;
   margin: 10px 10px 10px 10px;
@@ -10,6 +10,17 @@ body {
 
 .header {
   @include theme-aware('background', 'background-dark');
+}
+
+.footer {
+  @include theme-aware('background', 'background');
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  width: 100vw;
+  height: 30px;
+  font-weight: lighter;
+  font-size: small;
 }
 
 .p-avatar-lg {
