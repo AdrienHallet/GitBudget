@@ -66,15 +66,19 @@
     </span>
     <span class="absolute right-0">
       <button
+        *ngIf="isCreating"
         [disabled]="!transactionForm.valid"
         (click)="onCreate()"
         pButton
         type="button"
         label="Create"></button>
       <button
+        *ngIf="!isCreating"
+        [disabled]="!transactionForm.valid"
+        (click)="onUpdate()"
         pButton
         type="button"
-        label="Create & New" class="ml-2"></button>
+        label="Update"></button>
     </span>
   </span>
   </div>

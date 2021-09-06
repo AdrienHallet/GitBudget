@@ -6,7 +6,7 @@ import {TransactionService} from '../../../core/data/transaction.service';
 import {FormGroup} from '@angular/forms';
 import {
   TRANSACTION_CATEGORY_ID,
-  TRANSACTION_DATE,
+  TRANSACTION_DATE, TRANSACTION_ID,
   TRANSACTION_NAME,
   TRANSACTION_VALUE
 } from '../../../core/models/transaction.model';
@@ -19,6 +19,7 @@ export class TransactionFormComponent implements OnInit {
 
   categoryOptions$: Observable<Category[]>;
   transactionForm: FormGroup;
+  isCreating: boolean;
 
   readonly CATEGORY_ID = CATEGORY_ID;
   readonly CATEGORY_NAME = CATEGORY_NAME;
@@ -36,6 +37,7 @@ export class TransactionFormComponent implements OnInit {
   @Input()
   set form(transactionForm: FormGroup) {
     this.transactionForm = transactionForm;
+    this.isCreating = transactionForm.get(TRANSACTION_ID)?.value == null;
   }
 
   ngOnInit(): void {
@@ -43,7 +45,11 @@ export class TransactionFormComponent implements OnInit {
   }
 
   onCreate(): void {
-    this.transactionService.create(this.form.value);
+    this.transactionService.create(this.transactionForm.value);
+  }
+
+  onUpdate(): void {
+    this.transactionService.update(this.transactionForm.value);
   }
 
   onCancel(): void {
