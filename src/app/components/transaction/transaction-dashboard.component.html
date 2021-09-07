@@ -1,10 +1,10 @@
-<div class="flex flex-column md:flex-row">
-  <p-card header="Transactions" class="my-2 mr-1" [style]="{height: '80vh'}">
+<div class="grid lg:my-2">
+  <p-card header="Transactions" class="sm:col-12 lg:col-8">
     <app-transaction-table
       (unselectTransaction)="onUnselectTransaction()"
       (selectTransaction)="onSelectTransaction($event)"></app-transaction-table>
   </p-card>
-  <p-card header="Details" class="my-2 ml-1" [style]="{'min-width': '100vh'}">
+  <p-card header="Details" class="sm:col-12 lg:col-4">
     <app-transaction-form [form]="transactionForm"></app-transaction-form>
   </p-card>
 </div>

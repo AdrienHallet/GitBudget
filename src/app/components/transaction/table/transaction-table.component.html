@@ -7,8 +7,10 @@
          [paginator]="true"
          [rows]="10"
          [showCurrentPageReport]="true"
-         currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries"
-         [rowsPerPageOptions]="[10,25,50]">
+         currentPageReportTemplate="Displaying {first} to {last} (total:{totalRecords})"
+         [rowsPerPageOptions]="[10,25,50]"
+         [(selection)]="selectedTransaction"
+         styleClass="p-datatable-striped">
   <ng-template pTemplate="header">
     <tr>
       <th class="w-1">ID</th>

@@ -45,11 +45,11 @@ export class TransactionFormComponent implements OnInit {
   }
 
   onCreate(): void {
-    this.transactionService.create(this.transactionForm.value);
+    this.transactionService.create(this.transactionForm.value).subscribe();
   }
 
   onUpdate(): void {
-    this.transactionService.update(this.transactionForm.value);
+    this.transactionService.update(this.transactionForm.value).subscribe();
   }
 
   onCancel(): void {

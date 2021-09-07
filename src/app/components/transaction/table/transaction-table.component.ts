@@ -1,4 +1,4 @@
-import {Component, EventEmitter, OnInit, Output} from '@angular/core';
+import {Component, EventEmitter, OnDestroy, OnInit, Output} from '@angular/core';
 import {
   Transaction,
   TRANSACTION_CATEGORY_ID,
@@ -8,14 +8,15 @@ import {
   TRANSACTION_VALUE
 } from '../../../core/models/transaction.model';
 import {TransactionService} from '../../../core/data/transaction.service';
-import {Observable} from 'rxjs';
-import {tap} from 'rxjs/operators';
+import {Observable, Subject} from 'rxjs';
+import {takeUntil, tap} from 'rxjs/operators';
+import {ID} from '../../../core/models/app-data.model';
 
 @Component({
   selector: 'app-transaction-table',
   templateUrl: './transaction-table.component.html'
 })
-export class TransactionTableComponent implements OnInit {
+export class TransactionTableComponent implements OnInit, OnDestroy {
 
   transactions$: Observable<Transaction[]>;
   transactionCount: Observable<number>;
@@ -25,6 +26,7 @@ export class TransactionTableComponent implements OnInit {
   unselectTransaction: EventEmitter<void> = new EventEmitter<void>();
   @Output()
   selectTransaction: EventEmitter<Transaction> = new EventEmitter<Transaction>();
+  selectedTransaction: Transaction | undefined;
 
   readonly TRANSACTION_ID = TRANSACTION_ID;
   readonly TRANSACTION_VALUE = TRANSACTION_VALUE;
@@ -32,17 +34,36 @@ export class TransactionTableComponent implements OnInit {
   readonly TRANSACTION_DATE = TRANSACTION_DATE;
   readonly TRANSACTION_CATEGORY_ID = TRANSACTION_CATEGORY_ID;
 
+  private currentPageSize: number;
+  private currentPage: number;
+
+  private onDestroy$: Subject<void> = new Subject<void>();
+
   constructor(
     private transactionService: TransactionService,
   ) {
   }
 
   ngOnInit(): void {
+    this.initRefreshSubscribe();
+  }
+
+  ngOnDestroy(): void {
+    this.onDestroy$.next();
   }
 
   private loadTransactions(pageSize: number, page: number): void {
+    this.currentPageSize = pageSize;
+    this.currentPage = page;
     // Todo check unsubscribe
-    this.transactions$ = this.transactionService.getPage(pageSize, page).pipe(tap(data => console.log(data)));
+    this.transactions$ = this.transactionService.getPage(pageSize, page).pipe(
+      tap(data => {
+        if (this.selectedTransaction != null) {
+          this.selectedTransaction = data.find(transaction =>
+            transaction[ID] === (this.selectedTransaction ? this.selectedTransaction[ID] : null));
+        }
+      }),
+    );
     this.transactionCount = this.transactionService.count();
   }
 
@@ -59,5 +80,12 @@ export class TransactionTableComponent implements OnInit {
 
   onRowUnselect(): void {
     this.unselectTransaction.next();
+  }
+
+  private initRefreshSubscribe(): void {
+    this.transactionService.observeChange().pipe(
+      takeUntil(this.onDestroy$),
+      tap(() => this.loadTransactions(this.currentPageSize, this.currentPage)),
+    ).subscribe();
   }
 }
