@@ -1,16 +1,14 @@
 import { Component, Inject, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
-import { HttpClient, HttpParams, HttpHeaders } from '@angular/common/http';
-import { IllegalStateError } from './core/error/type/illegal-state.error';
+import { HttpClient } from '@angular/common/http';
 import { DOCUMENT } from '@angular/common';
 import { GithubService } from './core/auth/github/logic/github.service';
 import { take, tap } from 'rxjs/operators';
-import { DexieService } from './core/data/db/dexie.service';
 
 @Component({
   selector: 'app-root',
   templateUrl: './app.component.html',
-  styleUrls: ['./app.component.scss']
+  styleUrls: ['./app.component.scss'],
 })
 export class AppComponent implements OnInit {
   title = 'frontend';

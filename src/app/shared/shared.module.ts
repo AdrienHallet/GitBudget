@@ -22,6 +22,8 @@ import {DialogModule} from 'primeng/dialog';
 import {SidebarModule} from 'primeng/sidebar';
 import {PanelModule} from 'primeng/panel';
 import {CardModule} from 'primeng/card';
+import {ToastModule} from 'primeng/toast';
+import {MessageService} from 'primeng/api';
 
 @NgModule({
   declarations: [
@@ -51,6 +53,7 @@ import {CardModule} from 'primeng/card';
     SidebarModule,
     TableModule,
     TieredMenuModule,
+    ToastModule,
   ],
   exports: [
     // Angular
@@ -77,6 +80,10 @@ import {CardModule} from 'primeng/card';
     SidebarModule,
     TableModule,
     TieredMenuModule,
+    ToastModule,
+  ],
+  providers: [
+    MessageService,
   ]
 })
 export class SharedModule {

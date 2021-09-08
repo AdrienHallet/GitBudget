@@ -10,6 +10,7 @@ import {
   TRANSACTION_NAME,
   TRANSACTION_VALUE
 } from '../../../core/models/transaction.model';
+import {tap} from 'rxjs/operators';
 
 @Component({
   selector: 'app-transaction-form',
@@ -49,7 +50,9 @@ export class TransactionFormComponent implements OnInit {
   }
 
   onUpdate(): void {
-    this.transactionService.update(this.transactionForm.value).subscribe();
+    this.transactionService.update(this.transactionForm.value).pipe(
+      tap(() => this.transactionForm.markAsPristine())
+    ).subscribe();
   }
 
   onCancel(): void {

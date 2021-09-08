@@ -4,6 +4,7 @@ import {Observable, Subject} from 'rxjs';
 import {DataService} from './data.service';
 import {AppTable} from './db/table.enum';
 import {Transaction} from '../models/transaction.model';
+import {NotificationService} from '../../shared/services/notifications/notification.service';
 
 
 @Injectable({
@@ -18,6 +19,7 @@ export class TransactionService {
 
   constructor(
     private dataService: DataService,
+    private notificationService: NotificationService,
   ) {}
 
   observeChange(): Observable<void> {
@@ -28,6 +30,7 @@ export class TransactionService {
     return this.dataService.update(this.TABLE, transaction.id, transaction).pipe(
       take(1),
       tap(() => this.modified.next()),
+      tap(() => this.notificationService.info('Success', 'Updated')),
       map(() => transaction),
     );
   }

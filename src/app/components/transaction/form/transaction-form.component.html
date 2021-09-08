@@ -74,7 +74,7 @@
         label="Create"></button>
       <button
         *ngIf="!isCreating"
-        [disabled]="!transactionForm.valid"
+        [disabled]="!transactionForm.valid || transactionForm.pristine"
         (click)="onUpdate()"
         pButton
         type="button"
