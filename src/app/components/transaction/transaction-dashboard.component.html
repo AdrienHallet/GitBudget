@@ -1,10 +1,11 @@
-<div class="grid lg:my-2">
-  <p-card header="Transactions" class="sm:col-12 lg:col-8">
-    <app-transaction-table
-      (unselectTransaction)="onUnselectTransaction()"
-      (selectTransaction)="onSelectTransaction($event)"></app-transaction-table>
+<div class="grid my-2">
+  <p-card header="Transactions" class="col">
+      <app-transaction-table
+        (addTransaction)="onAddTransaction()"
+        (unselectTransaction)="onUnselectTransaction()"
+        (selectTransaction)="onSelectTransaction($event)"></app-transaction-table>
   </p-card>
-  <p-card header="Details" class="sm:col-12 lg:col-4">
+  <p-card *ngIf="showForm" header="Details" class="sm:col-12 lg:col-4">
     <app-transaction-form [form]="transactionForm"></app-transaction-form>
   </p-card>
 </div>

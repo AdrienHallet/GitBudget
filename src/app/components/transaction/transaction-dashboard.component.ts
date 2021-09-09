@@ -5,11 +5,13 @@ import {Transaction} from '../../core/models/transaction.model';
 
 @Component({
   selector: 'app-transaction-dashboard',
-  templateUrl: './transaction-dashboard.component.html'
+  templateUrl: './transaction-dashboard.component.html',
+  providers: [],
 })
 export class TransactionDashboardComponent implements OnInit {
 
   transactionForm: FormGroup;
+  showForm: boolean;
 
   constructor(
     private transactionFormService: TransactionFormService,
@@ -18,6 +20,11 @@ export class TransactionDashboardComponent implements OnInit {
 
   ngOnInit(): void {
     this.initForm();
+  }
+
+  onAddTransaction(): void {
+    this.initForm();
+    this.showForm = true;
   }
 
   onSelectTransaction($event: Transaction): void {
@@ -31,5 +38,4 @@ export class TransactionDashboardComponent implements OnInit {
   private initForm(): void {
     this.transactionForm = this.transactionFormService.getEmptyForm();
   }
-
 }

@@ -23,9 +23,12 @@ export class TransactionTableComponent implements OnInit, OnDestroy {
   isFormVisible = false;
 
   @Output()
+  addTransaction: EventEmitter<void> = new EventEmitter<void>();
+  @Output()
   unselectTransaction: EventEmitter<void> = new EventEmitter<void>();
   @Output()
   selectTransaction: EventEmitter<Transaction> = new EventEmitter<Transaction>();
+
   selectedTransaction: Transaction | undefined;
 
   readonly TRANSACTION_ID = TRANSACTION_ID;
@@ -52,6 +55,25 @@ export class TransactionTableComponent implements OnInit, OnDestroy {
     this.onDestroy$.next();
   }
 
+  onPageRequest($event: any): void {
+    console.log($event);
+    const pageSize = $event.rows;
+    const first = $event.first;
+    this.loadTransactions(pageSize, first / pageSize);
+  }
+
+  onAdd(): void {
+    this.addTransaction.next();
+  }
+
+  onRowSelect($event: any): void {
+    this.selectTransaction.next($event.data as Transaction);
+  }
+
+  onRowUnselect(): void {
+    this.unselectTransaction.next();
+  }
+
   private loadTransactions(pageSize: number, page: number): void {
     this.currentPageSize = pageSize;
     this.currentPage = page;
@@ -65,21 +87,6 @@ export class TransactionTableComponent implements OnInit, OnDestroy {
       }),
     );
     this.transactionCount = this.transactionService.count();
-  }
-
-  onPageRequest($event: any): void {
-    console.log($event);
-    const pageSize = $event.rows;
-    const first = $event.first;
-    this.loadTransactions(pageSize, first / pageSize);
-  }
-
-  onRowSelect($event: any): void {
-    this.selectTransaction.next($event.data as Transaction);
-  }
-
-  onRowUnselect(): void {
-    this.unselectTransaction.next();
   }
 
   private initRefreshSubscribe(): void {

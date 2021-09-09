@@ -10,6 +10,7 @@
          currentPageReportTemplate="Displaying {first} to {last} (total:{totalRecords})"
          [rowsPerPageOptions]="[10,25,50]"
          [(selection)]="selectedTransaction"
+         [scrollable]="true" scrollHeight="flex"
          styleClass="p-datatable-striped">
   <ng-template pTemplate="header">
     <tr>
@@ -31,6 +32,7 @@
   </ng-template>
   <ng-template pTemplate="paginatorright">
     <p-button
+      (click)="onAdd()"
       type="button"
       icon="pi pi-plus"
       styleClass="p-button-text"></p-button>
