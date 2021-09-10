@@ -7,7 +7,7 @@ import 'dexie-observable';
 import {exportDB, importInto} from 'dexie-export-import';
 import {AppTable} from './table.enum';
 import {AppData, ID} from '../../models/app-data.model';
-
+import {switchMap} from 'rxjs/operators';
 /**
  * Dexie-interface service
  */
@@ -15,6 +15,7 @@ import {AppData, ID} from '../../models/app-data.model';
   providedIn: 'root'
 })
 export class DexieService extends Dexie {
+
 
   constructor() {
     super('budget-dev');
@@ -78,7 +79,12 @@ export class DexieService extends Dexie {
     return from(this.table(tableName).count());
   }
 
-  getPage(table: AppTable, pageSize: number, page: number): Observable<AppData[]> {
+  getPage(table: AppTable, pageSize: number, page: number, reverse?: boolean): Observable<AppData[]> {
+    if (reverse) {
+      return this.count(table).pipe(
+        switchMap((lastId) => this.table(table).where(ID).belowOrEqual(lastId - page * pageSize).reverse().limit(pageSize).toArray())
+      );
+    }
     return from(
       this.table(table).where(ID).above(page * pageSize).limit(pageSize).toArray()
     );

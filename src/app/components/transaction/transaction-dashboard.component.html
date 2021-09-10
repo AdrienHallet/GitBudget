@@ -1,11 +1,14 @@
 <div class="grid my-2">
   <p-card header="Transactions" class="col">
       <app-transaction-table
+        #transactionTableComponent
         (addTransaction)="onAddTransaction()"
         (unselectTransaction)="onUnselectTransaction()"
         (selectTransaction)="onSelectTransaction($event)"></app-transaction-table>
   </p-card>
   <p-card *ngIf="showForm" header="Details" class="sm:col-12 lg:col-4">
-    <app-transaction-form [form]="transactionForm"></app-transaction-form>
+    <app-transaction-form
+      (created)="onCreated($event)"
+      [form]="transactionForm"></app-transaction-form>
   </p-card>
 </div>

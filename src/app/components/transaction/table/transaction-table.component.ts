@@ -55,6 +55,10 @@ export class TransactionTableComponent implements OnInit, OnDestroy {
     this.onDestroy$.next();
   }
 
+  public select(transaction: any): void {
+    this.selectedTransaction = transaction;
+  }
+
   onPageRequest($event: any): void {
     console.log($event);
     const pageSize = $event.rows;
@@ -78,7 +82,7 @@ export class TransactionTableComponent implements OnInit, OnDestroy {
     this.currentPageSize = pageSize;
     this.currentPage = page;
     // Todo check unsubscribe
-    this.transactions$ = this.transactionService.getPage(pageSize, page).pipe(
+    this.transactions$ = this.transactionService.getPage(pageSize, page, true).pipe(
       tap(data => {
         if (this.selectedTransaction != null) {
           this.selectedTransaction = data.find(transaction =>

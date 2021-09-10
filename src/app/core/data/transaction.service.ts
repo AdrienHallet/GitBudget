@@ -1,10 +1,11 @@
-import { Injectable } from '@angular/core';
+import {Injectable} from '@angular/core';
 import {map, share, take, tap} from 'rxjs/operators';
 import {Observable, Subject} from 'rxjs';
 import {DataService} from './data.service';
 import {AppTable} from './db/table.enum';
 import {Transaction} from '../models/transaction.model';
 import {NotificationService} from '../../shared/services/notifications/notification.service';
+import {ID} from '../models/app-data.model';
 
 
 @Injectable({
@@ -30,7 +31,7 @@ export class TransactionService {
     return this.dataService.update(this.TABLE, transaction.id, transaction).pipe(
       take(1),
       tap(() => this.modified.next()),
-      tap(() => this.notificationService.info('Success', 'Updated')),
+      tap(() => this.notificationService.info('Success', )),
       map(() => transaction),
     );
   }
@@ -39,6 +40,10 @@ export class TransactionService {
     return this.dataService.add(this.TABLE, newItem).pipe(
       take(1),
       tap(() => this.modified.next()),
+      map((id: number) => {
+        newItem[ID] = id;
+        return newItem;
+      })
     );
   }
 
@@ -48,8 +53,8 @@ export class TransactionService {
     );
   }
 
-  getPage(pageSize: number, page: number): Observable<Transaction[]> {
-    return (this.dataService.getPage(this.TABLE, pageSize, page) as Observable<Transaction[]>).pipe(
+  getPage(pageSize: number, page: number, reverse?: boolean): Observable<Transaction[]> {
+    return (this.dataService.getPage(this.TABLE, pageSize, page, reverse) as Observable<Transaction[]>).pipe(
       take(1),
     );
   }

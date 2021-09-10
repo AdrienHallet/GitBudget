@@ -1,9 +1,10 @@
-import { Injectable } from '@angular/core';
+import {Injectable} from '@angular/core';
 import {map} from 'rxjs/operators';
 import {from, Observable} from 'rxjs';
 import {DataService} from './data.service';
 import {AppTable} from './db/table.enum';
 import {Category} from '../models/category.model';
+import {ID} from '../models/app-data.model';
 
 
 @Injectable({
@@ -24,7 +25,12 @@ export class CategoryService {
   }
 
   create(newItem: Category): Observable<Category> {
-    return from(this.dataService.add(this.TABLE, newItem));
+    return from(this.dataService.add(this.TABLE, newItem)).pipe(
+      map((id) => {
+        newItem[ID] = id;
+        return newItem;
+      })
+    );
   }
 
   getAll(): Observable<Category[]> {

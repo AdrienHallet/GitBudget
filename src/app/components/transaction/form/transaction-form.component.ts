@@ -1,10 +1,11 @@
-import {Component, Input, OnInit} from '@angular/core';
+import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
 import {Observable} from 'rxjs';
 import {Category, CATEGORY_ID, CATEGORY_NAME} from '../../../core/models/category.model';
 import {CategoryService} from '../../../core/data/category.service';
 import {TransactionService} from '../../../core/data/transaction.service';
 import {FormGroup} from '@angular/forms';
 import {
+  Transaction,
   TRANSACTION_CATEGORY_ID,
   TRANSACTION_DATE, TRANSACTION_ID,
   TRANSACTION_NAME,
@@ -21,6 +22,11 @@ export class TransactionFormComponent implements OnInit {
   categoryOptions$: Observable<Category[]>;
   transactionForm: FormGroup;
   isCreating: boolean;
+
+  @Output()
+  created: EventEmitter<Transaction> = new EventEmitter<Transaction>();
+  @Output()
+  updated: EventEmitter<Transaction> = new EventEmitter<Transaction>();
 
   readonly CATEGORY_ID = CATEGORY_ID;
   readonly CATEGORY_NAME = CATEGORY_NAME;
@@ -46,12 +52,15 @@ export class TransactionFormComponent implements OnInit {
   }
 
   onCreate(): void {
-    this.transactionService.create(this.transactionForm.value).subscribe();
+    this.transactionService.create(this.transactionForm.value).pipe(
+      tap(transaction => this.created.next(transaction)),
+    ).subscribe();
   }
 
   onUpdate(): void {
     this.transactionService.update(this.transactionForm.value).pipe(
-      tap(() => this.transactionForm.markAsPristine())
+      tap(() => this.transactionForm.markAsPristine()),
+      tap(transaction => this.updated.next(transaction)),
     ).subscribe();
   }
 

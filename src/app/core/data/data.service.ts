@@ -1,8 +1,6 @@
 import { Injectable } from '@angular/core';
-import {catchError, mergeMap, switchMap} from 'rxjs/operators';
 import { GithubService } from '../auth/github/logic/github.service';
 import {Observable} from 'rxjs';
-import {GithubContent} from '../../shared/models/github/github-content.model';
 import {DexieService} from './db/dexie.service';
 import {AppData} from '../models/app-data.model';
 import {AppTable} from './db/table.enum';
@@ -20,7 +18,7 @@ export class DataService {
     private dexieService: DexieService
   ) {}
 
-  public add(table: AppTable, item: AppData): Observable<any> {
+  public add(table: AppTable, item: AppData): Observable<number> {
     return this.dexieService.addRow(table, item);
   }
 
@@ -32,8 +30,8 @@ export class DataService {
     return this.dexieService.getAll(table);
   }
 
-  public getPage(table: AppTable, pageSize: number, page: number): Observable<AppData[]> {
-    return this.dexieService.getPage(table, pageSize, page);
+  public getPage(table: AppTable, pageSize: number, page: number, reverse?: boolean): Observable<AppData[]> {
+    return this.dexieService.getPage(table, pageSize, page, reverse);
   }
 
   public get(table: AppTable, key: number): Observable<AppData> {
