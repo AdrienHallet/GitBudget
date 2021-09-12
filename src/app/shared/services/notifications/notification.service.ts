@@ -9,9 +9,17 @@ export class NotificationService {
   ) {
   }
 
+  success(title: string, message?: string): void {
+    this.message('success', title, message);
+  }
+
   info(title: string, message?: string): void {
+    this.message('info', title, message);
+  }
+
+  message(severity: string, title: string, message?: string): void {
     this.messageService.add({
-      severity: 'success',
+      severity,
       summary: title,
       detail: message,
     });

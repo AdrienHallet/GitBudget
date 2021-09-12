@@ -31,7 +31,7 @@ export class TransactionService {
     return this.dataService.update(this.TABLE, transaction.id, transaction).pipe(
       take(1),
       tap(() => this.modified.next()),
-      tap(() => this.notificationService.info('Success', )),
+      tap(() => this.notificationService.success('Success', 'Transaction updated')),
       map(() => transaction),
     );
   }
@@ -40,6 +40,7 @@ export class TransactionService {
     return this.dataService.add(this.TABLE, newItem).pipe(
       take(1),
       tap(() => this.modified.next()),
+      tap(() => this.notificationService.success('Success', 'Transaction created')),
       map((id: number) => {
         newItem[ID] = id;
         return newItem;
