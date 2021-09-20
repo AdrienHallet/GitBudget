@@ -1,5 +1,9 @@
 <ng-container *ngIf="categories$ | async as categories">
-  <p-table [value]="categories" selectionMode="single" (onRowSelect)="onRowSelect($event)">
+  <p-table
+    [value]="categories" selectionMode="single"
+    (onRowSelect)="onRowSelect($event)"
+    (onRowUnselect)="onRowUnselect()"
+  >
     <ng-template pTemplate="header">
       <tr>
         <th>Id</th>

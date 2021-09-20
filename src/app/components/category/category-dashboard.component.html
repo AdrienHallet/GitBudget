@@ -1,8 +1,11 @@
-<div class="grid">
-  <p-card header="Categories" class="col-12 md:col-4 my-2 pr-1">
-    <app-category-table (onCategorySelect)="onCategorySelect($event)"></app-category-table>
+<div class="grid my-2">
+  <p-card header="Categories" class="col-12 md:col-4">
+    <app-category-table
+      (selectCategory)="onCategorySelect($event)"
+      (unselectCategory)="onCategoryUnselect()"
+    ></app-category-table>
   </p-card>
-  <p-card header="Details" class="col-12 md:col-8 my-2 pl-1">
-    <app-category-detail [category]="activeCategory"></app-category-detail>
+  <p-card header="Details" class="col-12 md:col-8">
+    <app-category-form [form]="formCategory"></app-category-form>
   </p-card>
 </div>

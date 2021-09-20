@@ -15,7 +15,9 @@ export class CategoryTableComponent implements OnInit {
   categories$: Observable<Category[]>;
 
   @Output()
-  onCategorySelect: EventEmitter<Category> = new EventEmitter();
+  unselectCategory: EventEmitter<void> = new EventEmitter();
+  @Output()
+  selectCategory: EventEmitter<Category> = new EventEmitter();
 
   constructor(
     private categoryService: CategoryService,
@@ -31,7 +33,10 @@ export class CategoryTableComponent implements OnInit {
   }
 
   onRowSelect(event: any): void {
-    console.log(event);
-    this.onCategorySelect.emit(event.data as Category);
+    this.selectCategory.emit(event.data as Category);
+  }
+
+  onRowUnselect(): void {
+    this.unselectCategory.emit();
   }
 }
