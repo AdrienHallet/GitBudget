@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import {map, mergeMap, switchMap, tap} from 'rxjs/operators';
+import {catchError, map, mergeMap, switchMap, tap} from 'rxjs/operators';
 import {BehaviorSubject, iif, Observable, of} from 'rxjs';
 import {GithubService} from '../../auth/github/logic/github.service';
 import {DexieService} from './dexie.service';
@@ -27,7 +27,6 @@ export class DatabaseService {
     } else {
       localStorage.removeItem('db-sha');
     }
-
   }
 
   public retrieveDatabase(): Observable<any> {
@@ -40,9 +39,6 @@ export class DatabaseService {
     );
   }
 
-  /**
-   *
-   */
   public smartRetrieve(): Observable<boolean> {
     // Expose DB readiness status
     const databaseReady: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(false);
@@ -57,6 +53,7 @@ export class DatabaseService {
           )
         )
       ),
+      catchError(() => this.retrieveDatabase())
     ).subscribe();
 
     return databaseReady.asObservable();

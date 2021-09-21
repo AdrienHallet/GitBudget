@@ -8,6 +8,7 @@ import {exportDB, importInto} from 'dexie-export-import';
 import {AppTable} from './table.enum';
 import {AppData, ID} from '../../models/app-data.model';
 import {switchMap} from 'rxjs/operators';
+import {GIT_REPOSITORY_NAME} from '../../constants/app.constants';
 /**
  * Dexie-interface service
  */
@@ -18,7 +19,7 @@ export class DexieService extends Dexie {
 
 
   constructor() {
-    super('budget-dev');
+    super(GIT_REPOSITORY_NAME);
     this.version(3).stores({
       [AppTable.TRANSACTIONS]: '++id, name, date, value, categoryId',
       [AppTable.CATEGORIES]: '++id, name',

@@ -9,6 +9,8 @@ export const environment = {
   oauthURI: 'http://localhost:3000/auth-callback',
   oauthClientId: '2ff4005a4a71bedf0c50',
   common: commonVariables,
+  githubRepoName: 'budget-dev',
+  githubFileName: 'data.json',
 };
 
 /*

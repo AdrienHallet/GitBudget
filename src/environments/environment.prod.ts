@@ -5,4 +5,6 @@ export const environment = {
   oauthURI: 'https://budjet.netlify.app/.netlify/functions/auth-callback',
   oauthClientId: '2e78532df6d916faa462',
   common: commonVariables,
+  githubRepoName: 'budget',
+  githubFileName: 'data.json',
 };

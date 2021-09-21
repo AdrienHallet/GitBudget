@@ -9,6 +9,7 @@ import {GithubState} from './github.state';
 import {GithubContent} from '../../../../shared/models/github/github-content.model';
 import {GithubRepo} from '../../../../shared/models/github/github-repo.model';
 import {environment} from '../../../../../environments/environment';
+import {GIT_FILE_NAME, GIT_REPOSITORY_NAME} from '../../../constants/app.constants';
 
 @Injectable({providedIn: 'root'})
 export class GithubService {
@@ -55,9 +56,12 @@ export class GithubService {
   public fetchSHA(): Observable<string> {
     return this.authenticationState.user$.pipe(
       mergeMap((user, _) => {
-        return this.githubApi.getFileInfo(user.login, 'budget-dev', 'data.sqlite');
+        return this.githubApi.getFileInfo(user.login, GIT_REPOSITORY_NAME, GIT_FILE_NAME);
       }),
       map((content: GithubContent) => {
+        if (content == null) {
+          throw new IllegalStateError('no db');
+        }
         return content.sha;
       })
     );
@@ -68,18 +72,18 @@ export class GithubService {
     return this.authenticationState.user$.pipe(
       mergeMap((user, _) => {
         exposedUser = user;
-        return this.githubApi.getRepository(user.login, 'budget-dev').pipe(
+        return this.githubApi.getRepository(user.login, GIT_REPOSITORY_NAME).pipe(
           catchError(() => this.createRepository()),
         );
       }),
       mergeMap(() => {
-        return this.githubApi.getFileInfo(exposedUser.login, 'budget-dev', 'data.sqlite').pipe(
+        return this.githubApi.getFileInfo(exposedUser.login, GIT_REPOSITORY_NAME, GIT_FILE_NAME).pipe(
           catchError(() => this.createDatabase(exposedUser))
         );
       }),
       mergeMap((data: GithubContent) =>
-          iif(() => data === null,
-            this.createDatabase(exposedUser) ,
+          iif(() => data == null,
+            this.createDatabase(exposedUser),
             this.githubApi.getBlob(data.git_url)),
       )
     );
@@ -88,19 +92,19 @@ export class GithubService {
   createRepository(): Observable<GithubRepo> {
     return this.authenticationState.user$.pipe(
       mergeMap(user => {
-        return this.githubApi.createRepository(user.login, 'budget-dev');
+        return this.githubApi.createRepository(user.login, GIT_REPOSITORY_NAME);
       })
     );
   }
 
   createDatabase(user: User): Observable<GithubContent> {
-    return this.githubApi.createDatabase(user.login, 'budget-dev', 'data.sqlite');
+    return this.githubApi.createDatabase(user.login, GIT_REPOSITORY_NAME, GIT_FILE_NAME);
   }
 
   saveDatabase(data: string): any {
     return this.authenticationState.user$.pipe(
       mergeMap(user => {
-        return this.githubApi.saveDatabase(user.login, 'budget-dev', 'data.sqlite', data);
+        return this.githubApi.saveDatabase(user.login, GIT_REPOSITORY_NAME, GIT_FILE_NAME, data);
       })
     );
   }
