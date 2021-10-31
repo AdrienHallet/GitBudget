@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { Observable, Subject } from 'rxjs';
-import { share, shareReplay } from 'rxjs/operators';
+import { shareReplay } from 'rxjs/operators';
 import { User } from '../../shared/models/user.model';
 
 @Injectable({
@@ -13,6 +13,8 @@ export class AuthenticationState {
    */
   user$: Observable<User>;
   private user: Subject<User>;
+
+  private hasLogged = false;
 
 
   /**
@@ -27,6 +29,11 @@ export class AuthenticationState {
     * Sets the user.
     */
    setUser(user: User): void {
+     this.hasLogged = user !== null;
      this.user.next(user);
+   }
+
+   isLoggedIn(): boolean {
+     return this.hasLogged;
    }
 }

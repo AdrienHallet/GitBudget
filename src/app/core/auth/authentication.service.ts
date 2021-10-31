@@ -1,10 +1,11 @@
 import { Injectable } from '@angular/core';
-import { Observable } from 'rxjs';
+import {Observable} from 'rxjs';
 import {map, mergeMap, tap} from 'rxjs/operators';
 import { AuthenticationState } from './authentication.state';
 import { GithubService } from './github/logic/github.service';
 import {DatabaseService} from '../data/db/database.service';
 import {User} from '../../shared/models/user.model';
+import {ActivatedRouteSnapshot, CanActivate, Router, RouterStateSnapshot, UrlTree} from '@angular/router';
 
 
 /**
@@ -13,7 +14,7 @@ import {User} from '../../shared/models/user.model';
 @Injectable({
   providedIn: 'root'
 })
-export class AuthenticationService {
+export class AuthenticationService implements CanActivate {
   /**
    * Dependency Injection Constructor.
    */
@@ -21,7 +22,16 @@ export class AuthenticationService {
     private authenticationState: AuthenticationState,
     private databaseService: DatabaseService,
     private githubService: GithubService,
-  ) { }
+    private router: Router,
+  ) {
+  }
+
+  canActivate(route: ActivatedRouteSnapshot, state: RouterStateSnapshot):
+    boolean | UrlTree | Observable<boolean | UrlTree> | Promise<boolean | UrlTree> {
+         return this.authenticationState.isLoggedIn() ?
+           true :
+           this.router.navigate(['/'], {queryParams: { returnUrl: state.url}});
+    }
 
 
   loginWithGithub(code?: any): Observable<any> {

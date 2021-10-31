@@ -13,6 +13,7 @@ import {TransactionModule} from './components/transaction/transaction.module';
 import {SharedModule} from './shared/shared.module';
 import {CategoryModule} from './components/category/category.module';
 import {FooterComponent} from './components/footer/footer.component';
+import {LandingModule} from './components/landing/landing.module';
 
 @NgModule({
   declarations: [
@@ -25,6 +26,7 @@ import {FooterComponent} from './components/footer/footer.component';
     SharedModule,
     TransactionModule,
     CategoryModule,
+    LandingModule,
   ],
   providers: [
     { provide: ErrorHandler, useClass: CustomErrorHandler },
