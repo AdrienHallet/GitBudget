@@ -1,9 +1,12 @@
 import {Pipe, PipeTransform} from '@angular/core';
 import {CategoryService} from '../../core/data/category.service';
 import {CATEGORY_NAME} from '../../core/models/category.model';
-import {Observable} from 'rxjs';
+import {Observable, of} from 'rxjs';
 import {map} from 'rxjs/operators';
 
+/**
+ * Converts the numeric value (DB ID) into its name.
+ */
 @Pipe({name: 'category'})
 export class CategoryPipe implements PipeTransform {
 
@@ -13,6 +16,11 @@ export class CategoryPipe implements PipeTransform {
   }
 
   transform(value: number): Observable<string> {
-    return this.categoryService.get(value).pipe(map(category => category ? category[CATEGORY_NAME] : '?' + value + '?'));
+    if (value == null) {
+      return of('');
+    }
+    return this.categoryService.get(value).pipe(
+      map(category => category ? category[CATEGORY_NAME] : '?' + value + '?')
+    );
   }
 }
