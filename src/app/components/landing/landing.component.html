@@ -1,17 +1,23 @@
-<div class="flex justify-content-center pt-8">
-  <p-card [style]="{'width': '300px'}" styleClass="p-card-shadow">
-    <ng-template pTemplate="header">
-      <div class="flex justify-content-center pt-5">
-        <i class="pi pi-user center" style="font-size: 7rem"></i>
-      </div>
-    </ng-template>
-    <p class="flex justify-content-center">
-      <button pButton
-              type="button"
-              label="Log-in with Github"
-              icon="pi pi-github"
-              [loading]="false" (click)="githubLogin()">
-      </button>
-    </p>
-  </p-card>
-</div>
+<ng-container *ngIf="!(user$ | async)">
+  <div class="flex justify-content-center pt-8">
+    <p-card [style]="{'width': '300px'}" styleClass="p-card-shadow">
+      <ng-template pTemplate="header">
+        <div class="flex justify-content-center pt-5">
+          <i class="pi pi-user center" style="font-size: 7rem"></i>
+        </div>
+      </ng-template>
+      <p class="flex justify-content-center">
+        <button pButton
+                type="button"
+                label="Log-in with Github"
+                icon="pi pi-github"
+                [loading]="false" (click)="githubLogin()">
+        </button>
+      </p>
+    </p-card>
+  </div>
+</ng-container>
+
+<ng-container *ngIf="user$ | async">
+welcome
+</ng-container>

@@ -1,6 +1,6 @@
 <p-menubar [model]="mainMenuItems">
   <ng-template pTemplate="start">
-    My Application
+    <div (click)="onAppNameClick()">My Application</div>
   </ng-template>
   <ng-template pTemplate="end">
     <div *ngIf="user$ | async as user; else loginBlock">

@@ -1,5 +1,5 @@
 import {Component, OnDestroy, OnInit} from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
+import {ActivatedRoute, Router} from '@angular/router';
 import {Observable, Subject} from 'rxjs';
 import { filter, flatMap, mergeMap, switchMap, take, takeUntil, tap } from 'rxjs/operators';
 import { AuthenticationService } from 'src/app/core/auth/authentication.service';
@@ -29,6 +29,7 @@ export class HeaderComponent implements OnInit, OnDestroy {
 
   constructor(
     private authenticationService: AuthenticationService,
+    private router: Router,
     private activatedRoute: ActivatedRoute,
     private dataService: DataService,
     private githubService: GithubService,
@@ -110,5 +111,9 @@ export class HeaderComponent implements OnInit, OnDestroy {
         date: new Date(),
       } as Transaction).pipe(take(1)).subscribe();
     }
+  }
+
+  onAppNameClick(): void {
+    this.router.navigate(['/']);
   }
 }

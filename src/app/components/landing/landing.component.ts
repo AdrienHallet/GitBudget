@@ -1,7 +1,8 @@
 import {Component, OnDestroy} from '@angular/core';
 import {take, takeUntil} from 'rxjs/operators';
 import {AuthenticationService} from '../../core/auth/authentication.service';
-import {Subject} from 'rxjs';
+import {Observable, Subject} from 'rxjs';
+import {User} from '../../shared/models/user.model';
 
 @Component({
   selector: 'app-landing',
@@ -10,11 +11,14 @@ import {Subject} from 'rxjs';
 })
 export class LandingComponent implements OnDestroy {
 
+  user$: Observable<User>;
+
   private onDestroy$: Subject<void> = new Subject<void>();
 
   constructor(
     private authenticationService: AuthenticationService,
   ) {
+    this.initUser();
   }
 
   ngOnDestroy(): void {
@@ -31,4 +35,7 @@ export class LandingComponent implements OnDestroy {
       .subscribe();
   }
 
+  private initUser(): void {
+    this.user$ = this.authenticationService.getUser();
+  }
 }
